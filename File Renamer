@@ -1,0 +1,28 @@
+import os
+
+# Caminho da pasta com os arquivos
+pasta = "arquivos"  # Substitua pelo nome da pasta ou use "." para pasta atual
+
+# Nome base para os arquivos renomeados
+nome_base = "arquivo"
+
+# Verifica se a pasta existe
+if not os.path.exists(pasta):
+    print(f'❌ Erro: a pasta "{pasta}" não existe.')
+    exit()
+
+# Lista e filtra apenas arquivos (ignora subpastas)
+arquivos = [f for f in sorted(os.listdir(pasta)) if os.path.isfile(os.path.join(pasta, f))]
+
+# Renomeia os arquivos com numeração sequencial
+for i, nome_antigo in enumerate(arquivos, start=1):
+    _, extensao = os.path.splitext(nome_antigo)
+    novo_nome = f"{nome_base}_{i:03d}{extensao}"  # Ex: arquivo_001.txt
+
+    caminho_antigo = os.path.join(pasta, nome_antigo)
+    caminho_novo = os.path.join(pasta, novo_nome)
+
+    os.rename(caminho_antigo, caminho_novo)
+    print(f"✅ Renomeado: {nome_antigo} → {novo_nome}")
+
+print("\n✔️ Todos os arquivos foram renomeados com sucesso!")
